@@ -1,0 +1,21 @@
+import pandas as pd
+# 1. Load the Iris dataset
+csv_url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data'
+# Define column names (as the dataset has no header)
+column_names = ['sepal.length', 'sepal.width', 'petal.length', 'petal.width', 'Species']
+df = pd.read_csv(csv_url, header=None, names=column_names)
+# 2a. Display total number of rows and columns
+print("Shape of the dataset (rows, columns):", df.shape)
+# 2b. Display type of each column
+print("\nData types of each column:")
+print(df.dtypes)
+# 2c. Sort the data in descending order by 'sepal.length'
+sorted_df = df.sort_values(by='sepal.length', ascending=False)
+print("\nTop 5 rows after sorting by 'sepal.length' in descending order:")
+print(sorted_df.head())
+# 2d. Slice the data: rows 11 to 20 (index 10 to 19), columns sepal.length and
+Species
+sliced_df = df.loc[10:19, ['sepal.length', 'Species']].copy()
+sliced_df.rename(columns={'Species': 'Type'}, inplace=True)
+print("\nSliced Data (rows 11 to 20 with selected columns):")
+print(sliced_df)
