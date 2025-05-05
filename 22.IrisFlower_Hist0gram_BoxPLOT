@@ -1,0 +1,35 @@
+Download the Iris flower dataset or any other dataset into a DataFrame. (e.g.,
+https://archive.ics.uci.edu/ml/datasets/Iris ). Scan the dataset and give the
+inference as:
+1. List down the features and their types (e.g., numeric, nominal) available in
+the dataset.
+2. Create a histogram for each feature in the dataset to illustrate the feature
+distributions.
+3. Create a box plot for each feature in the dataset.
+4. Compare distributions and identify outliers.
+*************************************************************
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+# Step 2: Load the Iris dataset from Seaborn
+df = sns.load_dataset('iris')
+# Step 3: Display basic info
+print("Dataset Info:\n")
+print(df.info())
+print("\nFirst 5 rows of the dataset:\n")
+print(df.head())
+# Step 4: Histogram for each numeric feature
+df.hist(figsize=(10, 8), edgecolor='black')
+plt.suptitle("Histograms of Iris Features", fontsize=16)
+plt.tight_layout()
+plt.show()
+# Step 5: Boxplot for each feature grouped by species
+numeric_features = df.select_dtypes(include='float')
+plt.figure(figsize=(12, 8))
+for i, feature in enumerate(numeric_features.columns, 1):
+    plt.subplot(2, 2, i)
+    sns.boxplot(x='species', y=feature, data=df, palette="Set3")
+    plt.title(f'Box Plot of {feature} by Species')
+
+plt.tight_layout()
+plt.show()
