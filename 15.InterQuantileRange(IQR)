@@ -1,0 +1,25 @@
+1. Load the demo dataset in dataframe object df
+2. Detect the outlier using Inter Quantile Range(IQR)
+3. remove the outliers from the dataset
+***********************************************************************************
+import pandas as pd
+import numpy as np
+from scipy import stats
+np.random.seed(42)
+df = pd.DataFrame({
+'Age': np.random.randint(20, 50, 100),
+'Income': np.random.normal(50000, 12000, 100),
+'Score': np.random.normal(70, 10, 100)
+})
+# Add outliers
+df.loc[5, 'Income'] = 150000
+df.loc[15, 'Score'] = 130
+# Step 2: Detect outliers using IQR
+Q1 = df.quantile(0.25)
+Q3 = df.quantile(0.75)
+IQR = Q3 - Q1
+# Step 3: Remove outliers
+df_clean = df[~((df < (Q1 - 1.5 * IQR)) | (df > (Q3 + 1.5 *
+IQR))).any(axis=1)]
+print("Original Data Size:", df.shape[0])
+print("Cleaned Data Size:", df_clean.shape[0])
