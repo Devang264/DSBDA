@@ -1,0 +1,33 @@
+1. Load the demo dataset in dataframe object df
+2. Detect the outlier using Z-score
+3. replace the outliers with the median value.
+***********************************************************************************************
+import pandas as pd
+import numpy as np
+from scipy import stats
+
+# 1. Load demo dataset (df2)
+np.random.seed(0)
+df2 = pd.DataFrame({
+    'Age': np.random.randint(20, 40, 50),
+    'Income': np.random.normal(50000, 10000, 50),
+    'Score': np.random.normal(75, 10, 50)
+})
+df2.loc[[2, 10], ['Income', 'Score']] = [150000, 130]
+print("Original:\n", df2.head())
+
+# 2. Detect outliers using Z-score
+z_scores = np.abs(stats.zscore(df2))
+outlier_mask_np = (z_scores > 3)  # Keep the NumPy array
+
+# Convert the boolean NumPy array to a pandas DataFrame for viewing
+outlier_mask_df = pd.DataFrame(outlier_mask_np, columns=df2.columns)
+print("\nBoolean mask of outliers (True indicates an outlier):\n", outlier_mask_df.head(15))
+
+# 3. Replace outliers with median
+df2 = df2.mask(outlier_mask_np, df2.median(numeric_only=True), axis=1)
+print("\nOutliers replaced:\n", df2.head())
+
+# Save to CSV
+df2.to_csv("demo_outliers_short.csv", index=False)
+print("\nSaved to demo_outliers_short.csv")
