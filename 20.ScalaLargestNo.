@@ -1,0 +1,21 @@
+object LargestOfTwo {
+  def main(args: Array[String]): Unit = {
+    val num1 = 15
+    val num2 = 25
+
+    val largest = if (num1 > num2) {
+      num1
+    } else {
+      num2
+    }
+
+    println(s"The largest number between $num1 and $num2 is: $largest")
+  }
+}
+
+object NamePrinter {
+  def main(args: Array[String]): Unit = {
+    val myName = "Your Name Here" // Replace "Your Name Here" with your actual name
+    println(s"My name is $myName")
+  }
+}
