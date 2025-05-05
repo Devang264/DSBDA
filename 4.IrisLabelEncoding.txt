@@ -2,23 +2,23 @@
 'https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data'
 2. Perform the label encoding , by considering Species as target variable.
 *************************************************************************************************************
-# Step 1: Import necessary libraries
 import pandas as pd
+from sklearn.preprocessing import LabelEncoder
 
-# Step 2: Load the dataset from the URL
+# Step 1: Load the Iris dataset from the given URL
 csv_url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data'
+column_names = ['SepalLength', 'SepalWidth', 'PetalLength', 'PetalWidth', 'Species']
+iris_df = pd.read_csv(csv_url, header=None, names=column_names)
 
-# Define column names since the dataset doesn't include them
-column_names = ['sepal_length', 'sepal_width', 'petal_length', 'petal_width', 'species']
-df = pd.read_csv(csv_url, header=None, names=column_names)
+# Check the first few rows
+print("First 5 rows of the dataset:")
+print(iris_df.head())
 
-# Display first few rows of the dataset
-print("Original Dataset:")
-print(df.head())
+# Step 2: Perform label encoding on 'Species'
+label_encoder = LabelEncoder()
+iris_df['Species_encoded'] = label_encoder.fit_transform(iris_df['Species'])
 
-# Step 3: Perform One Hot Encoding on the 'species' column (target variable)
-df_encoded = pd.get_dummies(df, columns=['species'])
+# Check the encoded labels
+print("\nEncoded Species column:")
+print(iris_df[['Species', 'Species_encoded']].drop_duplicates())
 
-# Display the encoded dataset
-print("\nOne-Hot Encoded Dataset:")
-print(df_encoded.head())
