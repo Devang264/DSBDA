@@ -1,0 +1,35 @@
+1. Load the Academic Performance dataset in data frame object.
+2. Check null values in the dataset.
+3. Count the number of null values in complete data set (Hint: eplace the null values with
+standard null value NaN).
+4. Dropping rows with at least 1 null value.
+5. Dropping rows if all values in that row are missing
+6. Dropping columns with at least 1 null value.
+7. Dropping Rows with at least 1 null value in CSV file.
+*****************************************************************************************
+import pandas as pd
+import numpy as np
+# 1. Load the Academic Performance dataset
+curl ='https://drive.google.com/uc?id=1Z_k34IEgYjSAs7Wsr88nJkcpqGX7RNsK'
+df = pd.read_csv(curl)
+# 2. Check for null values in the dataset
+print("Null Values in Each Column:\n", df.isnull().sum())
+# 3. Count total null values in the dataset
+total_nulls = df.isnull().sum().sum()
+print("\nTotal Null Values in the Dataset:", total_nulls)
+# 4. Dropping rows with at least 1 null value
+df_dropped_any = df.dropna()
+print("\nData After Dropping Rows with Any Null Value:\n",
+df_dropped_any)
+# 5. Dropping rows where all values are missing
+df_dropped_all = df.dropna(how='all')
+print("\nData After Dropping Rows where All Values are Missing:\n",
+df_dropped_all)
+# 6. Dropping columns with at least 1 null value
+df_dropped_cols = df.dropna(axis=1)
+print("\nData After Dropping Columns with Any Null Value:\n",
+df_dropped_cols)
+#7. Dropping rows with at least 1 null value and saving to new CSV
+df_cleaned = df.dropna()
+df_cleaned.to_csv("AcademicPerformance_Cleaned.csv", index=False)
+print("\nCleaned CSV saved as 'AcademicPerformance_Cleaned.csv")
