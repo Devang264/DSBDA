@@ -1,0 +1,43 @@
+Write a Scala program to find a number is zero, positive or negative and write a
+Scala program to print your name.
+Ans.
+1. Load the demo dataset in dataframe object df
+2. Detect the outlier using ScatterPlot
+3. Handle the outlier using Quantile based flooring and capping (Hint: the
+outlier is capped at a certain value above the 90th percentile value or floored at
+a factor below the 10th percentile value)
+Ans.
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+# 1. Load the demo dataset (create a simple one for illustration)
+data = {'Student_ID': range(1, 21),
+'Math_Score': [65, 67, 70, 69, 66, 72, 68, 74, 71, 69, 67, 100, 64,
+62, 61, 60, 78, 79, 80, 150] # Outlier at 150
+}
+df = pd.DataFrame(data)
+print("Original Dataset:")
+print(df)
+# 2. Detect outlier using scatter plot
+sns.scatterplot(x='Student_ID', y='Math_Score', data=df)
+plt.title("Scatter Plot to Detect Outliers")
+plt.xlabel("Student ID")
+plt.ylabel("Math Score")
+plt.grid(True)
+plt.show()
+# 3. Handle outlier using Quantile based flooring and capping
+q_low = df['Math_Score'].quantile(0.10)
+q_high = df['Math_Score'].quantile(0.90)
+df['Math_Score_Capped'] = np.where(df['Math_Score'] < q_low, q_low,
+np.where(df['Math_Score'] > q_high, q_high,
+df['Math_Score']))
+print("\nDataset after flooring and capping outliers:")
+print(df)
+# Plot after capping
+sns.scatterplot(x='Student_ID', y='Math_Score_Capped', data=df)
+plt.title("Scatter Plot After Outlier Handling")
+plt.xlabel("Student ID")
+plt.ylabel("Capped Math Score")
+plt.grid(True)
+plt.show()
