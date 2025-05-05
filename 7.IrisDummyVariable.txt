@@ -1,0 +1,22 @@
+# Step 1: Import necessary libraries
+import pandas as pd
+
+# Step 2: Define the CSV URL
+csv_url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data'
+
+# Step 3: Define column names (since the dataset doesn't include them)
+columns = ['sepal_length', 'sepal_width', 'petal_length', 'petal_width', 'species']
+
+# Step 4: Load the dataset
+df = pd.read_csv(csv_url, header=None, names=columns)
+
+# Step 5: Display first few rows
+print("Original Dataset:")
+print(df.head())
+
+# Step 6: Perform Dummy Variable Encoding on the 'species' column
+df_encoded = pd.get_dummies(df, columns=['species'], drop_first=True)
+
+# Step 7: Display the encoded dataset
+print("\nDummy Variable Encoded Dataset:")
+print(df_encoded.head())
