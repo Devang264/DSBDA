@@ -1,0 +1,41 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Correct the CSV URL by removing the newline
+csv_url = 'https://drive.google.com/uc?id=1BaILYt6zWFGGWkKGtinOI4swa-VI_U54'
+
+# 1. Load the demo dataset
+df = pd.read_csv(csv_url)
+print("Original Dataset:")
+print(df.head())
+
+# 2. Detect outliers using boxplot
+plt.figure(figsize=(10,6))
+sns.boxplot(data=df)
+plt.title("Boxplot for Outlier Detection - Original")
+plt.show()
+
+# 3. Handle outliers using Quantile-based flooring and capping
+# Apply flooring at 10th percentile and capping at 90th percentile
+for col in df.select_dtypes(include=[np.number]).columns:
+    # Calculate the 10th and 90th percentiles
+    Q1 = df[col].quantile(0.10)
+    Q3 = df[col].quantile(0.90)
+    
+    # Floor the values below the 10th percentile to Q1
+    df[col] = np.where(df[col] < Q1, Q1, df[col])
+    
+    # Cap the values above the 90th percentile to Q3
+    df[col] = np.where(df[col] > Q3, Q3, df[col])
+
+# 4. Plot the boxplot after handling outliers
+plt.figure(figsize=(10,6))
+sns.boxplot(data=df)
+plt.title("Boxplot for Outlier Detection - After Handling")
+plt.show()
+
+# Print the cleaned dataset (for validation)
+print("Cleaned Dataset:")
+print(df.head())
