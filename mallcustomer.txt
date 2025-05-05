@@ -1,0 +1,52 @@
+1. Load the MallCustomer dataset in dataframe object df
+2. Display summary statistics (mean, median, minimum, maximum, standard
+deviation) for
+a dataset for each column
+3. Display Measures of Dispersion ( Mean Absolute Deviation, Variance,
+Standard Deviation,
+Range, Quartiles, Skewness)
+4. if your categorical variable is age groupsa nd quantitative variable is
+income, then
+provide summary statistics (minimum and maximum) of income grouped by
+the age
+groups.
+Ans.
+****************************************************************************************************
+import pandas as pd
+import numpy as np
+from scipy.stats import skew
+
+# Replace 'path/to/your/dataset.csv' with the actual path to your dataset
+file_path = 'path/to/your/dataset.csv' 
+df = pd.read_csv(file_path)
+
+# Display summary statistics
+print("Summary statistics for each column:")
+print(df.describe())
+
+# Select only numeric columns
+numeric_df = df.select_dtypes(include=[np.number])
+
+# Mean Absolute Deviation (MAD)
+mad = numeric_df.apply(lambda x: np.mean(np.abs(x - x.mean())), axis=0)
+print("\nMean Absolute Deviation (MAD):\n", mad)
+
+# Variance, Standard Deviation, Range, Quartiles, Skewness
+variance = numeric_df.var()
+std_dev = numeric_df.std()
+data_range = numeric_df.max() - numeric_df.min()
+quartiles = numeric_df.quantile([0.25, 0.5, 0.75])
+skewness = numeric_df.apply(lambda x: skew(x.dropna()), axis=0)
+
+# Displaying all the calculated measures of dispersion
+print("\nMeasures of Dispersion:")
+print("Variance:\n", variance)
+print("Standard Deviation:\n", std_dev)
+print("Range:\n", data_range)
+print("Quartiles (25%, 50%, 75%):\n", quartiles)
+print("Skewness:\n", skewness)
+
+# Summary statistics of Income grouped by Age Group
+print("\nSummary statistics of Income grouped by Age Group:")
+income_grouped = df.groupby('Age Group')['Income'].agg(['min', 'max'])
+print(income_grouped)
