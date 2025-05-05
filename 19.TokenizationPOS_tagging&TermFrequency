@@ -1,0 +1,57 @@
+import nltk
+import string
+from nltk.corpus import stopwords
+from nltk.stem import PorterStemmer, WordNetLemmatizer
+from sklearn.feature_extraction.text import TfidfVectorizer
+
+# Download necessary NLTK data (run this once)
+nltk.download('punkt')
+nltk.download('averaged_perceptron_tagger')
+nltk.download('stopwords')
+nltk.download('wordnet')
+nltk.download('omw-1.4')
+
+# 1. Sample Document
+sample_document = """
+This is a sample document for demonstrating document preprocessing techniques in Python.
+It includes multiple sentences with various words, some of which might be considered stop words.
+We will perform tokenization, Part-of-Speech (POS) tagging, stop word removal, stemming, and lemmatization.
+The goal is to clean and normalize the text data for further analysis, such as Term Frequency-Inverse Document Frequency (TF-IDF) calculation.
+Python's NLTK library provides excellent tools for these tasks.
+"""
+
+# 2. Tokenization
+tokens = nltk.word_tokenize(sample_document.lower())
+print("Tokens:", tokens)
+
+# 3. POS Tagging
+pos_tags = nltk.pos_tag(tokens)
+print("\nPOS Tags:", pos_tags)
+
+# 4. Stop Words Removal
+stop_words = set(stopwords.words('english'))
+punctuation = set(string.punctuation)
+filtered_tokens = [w for w in tokens if not w in stop_words and not w in punctuation]
+print("\nTokens after Stop Words and Punctuation Removal:", filtered_tokens)
+
+# 5. Stemming
+stemmer = PorterStemmer()
+stemmed_tokens = [stemmer.stem(w) for w in filtered_tokens]
+print("\nStemmed Tokens:", stemmed_tokens)
+
+# 6. Lemmatization
+lemmatizer = WordNetLemmatizer()
+lemmatized_tokens = [lemmatizer.lemmatize(w) for w in filtered_tokens]
+print("\nLemmatized Tokens:", lemmatized_tokens)
+
+# 7. TF-IDF Calculation
+corpus = [sample_document]
+tfidf_vectorizer = TfidfVectorizer()
+tfidf_matrix = tfidf_vectorizer.fit_transform(corpus)
+feature_names = tfidf_vectorizer.get_feature_names_out()
+tfidf_array = tfidf_matrix.toarray()
+
+print("\nTF-IDF Representation of the Document:")
+for i, tfidf_value in enumerate(tfidf_array[0]):
+    if tfidf_value > 0:
+        print(f"{feature_names[i]}: {tfidf_value:.4f}")
