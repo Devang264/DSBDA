@@ -1,0 +1,26 @@
+1.Use the inbuilt dataset 'titanic'. Use the Seaborn library to see if we can find
+any patterns in
+the data.
+2. Write a code to check how the price of the ticket (column name: 'fare') for
+each passenger is distributed by plotting a histogram.
+Ans.
+**********************************************************************************
+# Step 1: Import required libraries
+import seaborn as sns
+import pandas as pd
+import matplotlib.pyplot as plt
+# Step 2: Load the Titanic dataset
+df = sns.load_dataset('titanic')
+# Step 3: Display the first few rows
+print("First 5 records:\n", df.head())# Step 4: Summary of the dataset
+print("\nDataset Info:")
+df.info()
+# Step 5: Check for null values
+print("\nMissing values:\n", df.isnull().sum())
+# Step 6: Plot histogram for 'fare' column
+sns.histplot(df['fare'], bins=30, kde=True, color='skyblue')
+plt.title('Distribution of Fare')
+plt.xlabel('Fare')
+plt.ylabel('Number of Passengers')
+plt.grid(True)
+plt.show()
