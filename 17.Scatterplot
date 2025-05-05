@@ -1,6 +1,4 @@
-Write a Scala program to find a number is zero, positive or negative and write a
-Scala program to print your name.
-Ans.
+
 1. Load the demo dataset in dataframe object df
 2. Detect the outlier using ScatterPlot
 3. Handle the outlier using Quantile based flooring and capping (Hint: the
