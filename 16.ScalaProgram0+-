@@ -1,0 +1,20 @@
+object NumberChecker {
+  def main(args: Array[String]): Unit = {
+    val number = 5 // You can change this value to test
+
+    if (number == 0) {
+      println("The number is zero.")
+    } else if (number > 0) {
+      println("The number is positive.")
+    } else {
+      println("The number is negative.")
+    }
+  }
+}
+
+object NamePrinter {
+  def main(args: Array[String]): Unit = {
+    val myName = "Your Name Here" // Replace "Your Name Here" with your actual name
+    println(s"My name is $myName")
+  }
+}
