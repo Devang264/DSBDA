@@ -1,18 +1,7 @@
-Consider the given dataset Students Performance Test1
-1. Check that is there any missing values in dataframe as a whole
-2. is there any missing values across each column
-3. count of missing values across each column
-4. count row wise missing value5. count of missing values of a gender column.
-6. groupby count of missing values of a column , consider column gender and
-score
-7. replace the missing value of score column with average value of the column
-Ans.
+
 import pandas as pd
 # Assuming you already have the dataset loaded:
-csv_url =
-'https://docs.google.com/spreadsheets/d/1qfMIoIbjY66gGdrKIOUCaRyPZ4q8_5K4w
-wjjceDkBJQ/export?format=csv'
-df = pd.read_csv(csv_url)
+df = pd.read_csv('/content/Student_performance_10k.csv')
 # 1. Check if there are any missing values in the DataFrame
 print("Any missing values in dataframe:", df.isnull().values.any())
 # 2. Check for missing values across each column
@@ -29,9 +18,9 @@ print("\nMissing values in 'gender' column:",
 df['gender'].isnull().sum())
 # 6. Groupby count of missing values using 'gender' and 'score'
 print("\nGroupby count (including missing values):")
-print(df.groupby(['gender', 'score'], dropna=False).size())
+print(df.groupby(['gender', 'math_score'], dropna=False).size()) 
 # 7. Replace missing values in 'score' column with column's average
-average_score = df['score'].mean(skipna=True)
-df['score'] = df['score'].fillna(average_score)
+average_score = df['reading_score'].mean(skipna=True)  
+df['reading_score'] = df['reading_score'].fillna(average_score)  
 print("\nUpdated DataFrame after filling missing scores with average:")
 print(df)
