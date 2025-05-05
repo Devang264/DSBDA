@@ -1,5 +1,13 @@
+1. Locate open Iris dataset from the URL csv_url =
+'https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data'
+2. Perform the following operation on dataset
+a) Display total no of rows and column
+b) Display type of each column
+c) Sort the data in descending order , by considering column sepal.length
+d) Slice the data: 11 to 20 rows, and only two columns, sepal.length and Species
+rename the column Species to Type
+********************************************************************************
 import pandas as pd
-
 # Load the dataset
 df = pd.read_csv('/content/Iris.csv')
 
