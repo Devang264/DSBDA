@@ -8,23 +8,22 @@ d) Slice the data: 11 to 20 rows, and only two columns, sepal.length and Species
 rename the column Species to Type
 ********************************************************************************
 import pandas as pd
-# Load the dataset
-df = pd.read_csv('/content/Iris.csv')
 
-# Print total rows and columns
-print("Total no. rows and columns:", df.shape)
+# Load dataset from URL
+url = r"C:\Users\ashut\Downloads\Iris.csv"
+cols = ['sepal.length', 'sepal.width', 'petal.length', 'petal.width', 'Species']
+df = pd.read_csv(url, header=None, names=cols)
 
-# Print column data types
-print("\nColumn data types\n:", df.dtypes)
+# a) Rows and columns
+print("Shape:", df.shape)
 
-# Rename columns and sort the DataFrame
-columns_name = ['sepal.length', 'sepal.width', 'petal.length', 'petal.width', 'Species']
-df = pd.read_csv('Iris.csv', header=None, names=columns_name)  
+# b) Column types
+print("\nTypes:\n", df.dtypes)
+
+# c) Sort by sepal.length (descending)
 df_sorted = df.sort_values(by='sepal.length', ascending=False)
-print("\nSorted dataset (descending by sepal.length):\n", df_sorted.head())
+print("\nSorted:\n", df_sorted.head())
 
-# Slice the DataFrame using iloc and rename a column
-sliced_df = df.loc[10:19, ['sepal.length','Species']].copy()
-sliced_df.rename(columns={'Species': 'Type'}, inplace=True)
-print("\nSliced Data (rows 11 to 20 with selected columns):")
-print(sliced_df)
+# d) Slice rows 11–20, select and rename columns
+sliced = df.loc[10:19, ['sepal.length', 'Species']].rename(columns={'Species': 'Type'})
+print("\nSliced:\n", sliced)
