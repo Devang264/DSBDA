@@ -1,0 +1,29 @@
+import pandas as pd
+import numpy as np
+
+# 1. Load the dataset:
+file_id = '1ZZRz4k0KFDt6uZD-EcR62u9UIwDVdvV4'
+csv_url = f'https://drive.google.com/uc?export=download&id={file_id}'
+df = pd.read_csv(csv_url)
+
+# 2. Check for null values:
+print("Null values in dataset:\n", df.isnull().sum())
+
+# 3. Replace empty/blank values with NaN:
+df.replace(['', ' ', 'NA', 'na'], np.nan, inplace=True)
+
+# 4. Impute missing 'Math Score' with the mean:
+df['Math Score'] = df['Math Score'].astype(float)
+mean_math = df['Math Score'].mean()
+df['Math Score'] = df['Math Score'].fillna(mean_math) 
+
+# 5. Impute missing 'Reading Score' with the standard deviation:
+df['Reading Score'] = df['Reading Score'].astype(float)
+std_reading = df['Reading Score'].std()
+df['Reading Score'] = df['Reading Score'].fillna(std_reading)
+
+# 6. Impute missing 'Place' with 'Nashik':
+df['Place'] = df['Place'].fillna('Nashik')
+
+# Display the cleaned dataset:
+print("\nCleaned Dataset:\n", df.head())
